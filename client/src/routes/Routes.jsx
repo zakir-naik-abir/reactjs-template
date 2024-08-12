@@ -5,6 +5,9 @@ import ErrorPage from '../pages/ErrorPage'
 import RoomDetails from '../pages/RoomDetails/RoomDetails'
 import Login from '../pages/Register/Login'
 import SignUp from '../pages/Register/SignUp'
+import PrivateRoute from './PrivateRoute'
+import DashboardLayout from '../layouts/DashboardLayout'
+import ManageUser from '../pages/Dashboard/Admin/ManageUser'
 
 export const router = createBrowserRouter([
   {
@@ -24,4 +27,19 @@ export const router = createBrowserRouter([
       { path: '/signup', element: <SignUp /> },
     ],
   },
+  {
+    path: '/dashboard',
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+    children: [
+      // {
+      //   index: true,
+      //   element: <PrivateRoute><Statistics /></PrivateRoute>
+      // },
+      // for admin
+      {
+        path: "manageUsers",
+        element: <PrivateRoute><ManageUser /></PrivateRoute>,
+      },
+    ]
+  }
 ])

@@ -5,14 +5,17 @@ import useAuth from '../../hooks/useAuth';
 import { ImSpinner11 } from 'react-icons/im';
 import toast from 'react-hot-toast';
 import { imageUpload } from '../../api/utils';
+import { useState } from 'react';
 
 const SignUp = () => {
   const { createUser, loading, setLoading, resetPassword, showPassword, setShowPassword, updateUserProfile } = useAuth();
+  const [imagePreview, setImagePreview] = useState();
+  const [imageText,  setImageText] = useState('Upload Image');
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
 
-  const handleSubmit = async e =>{
+  const handleSubmit = async(e) =>{
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -33,7 +36,12 @@ const SignUp = () => {
       toast.error(err.message)
       setLoading(false)
     }
-  }
+  };
+
+  const handleImage = image =>{
+    setImagePreview(URL.createObjectURL(image))
+    setImageText(image.name)
+  };
 
   return (
     <div className='flex justify-center items-center min-h-screen'>
@@ -61,27 +69,35 @@ const SignUp = () => {
               <label htmlFor='email' className='block mb-2 text-sm'>
                 Name
               </label>
-              <input
-                type='text'
-                name='name'
-                id='name'
-                placeholder='Enter Your Name Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-              />
+              <input type='text' name='name' id='name' placeholder='Enter Your Name Here' className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-gray-400 bg-gray-200 text-gray-900' data-temp-mail-org='0'/>
             </div>
-            <div>
+            {/* <div>
               <label htmlFor='image' className='block mb-2 text-sm'>
                 Select Image:
               </label>
-              <input
-                required
-                type='file'
-                id='image'
-                name='image'
-                accept='image/*'
-              />
+              <input onChange={e => handleImage(e.target.files[0])} className='text-sm cursor-pointer w-36 hidden items-center' type="file" name="image" id="image" accept="image/*" hidden />
+              <div className='border   rounded font-semibold bg-rose-200 cursor-pointer p-1 px-3 hover:bg-rose-400'>
+              {imageText.length > 15 ? imageText.split('.')[0].slice(0, 15) + "." + imageText.split('.')[1] : imageText } 
+              </div>
+              <div className="w-10 h-10 overflow-hidden object-cover rounded-sm items-center flex">
+                    {imagePreview && <img className=" items-center " src={imagePreview}/>}
+                  </div>
+            </div> */}
+            <div className='  '>
+              <div className='flex justify-center gap-5 bg-gray-200 w-full  mx-auto items-center text-center input input-bordered '>
+                <span className="label-text">Image :</span>
+                <label htmlFor="image" className="flex gap-2 cursor-pointer">
+                  <input onChange={e => handleImage(e.target.files[0])} className='w-full px-3 py-2 border rounded-md  focus:outline-gray-400  text-gray-900' type="file" name="image" id="image" accept="image/*" hidden />
+                  <div className='border   rounded font-semibold bg-rose-200 cursor-pointer p-1 px-3 hover:bg-rose-400'>
+                  {imageText.length > 15 ? imageText.split('.')[0].slice(0, 15) + "." + imageText.split('.')[1] : imageText } 
+                  </div>
+                </label>
+                <div className="w-8 h-8 overflow-hidden object-cover rounded-sm items-center flex">
+                  {imagePreview && <img className=" items-center " src={imagePreview}/>}
+                </div>
+              </div>
             </div>
+
             <div>
               <label htmlFor='email' className='block mb-2 text-sm'>
                 Email address

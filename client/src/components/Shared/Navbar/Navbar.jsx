@@ -7,7 +7,6 @@ import avatarImg from '../../../assets/images/placeholder.jpg'
 import { IoSettingsSharp } from "react-icons/io5";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { SiGnuprivacyguard } from "react-icons/si";
-import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
@@ -87,15 +86,15 @@ const Navbar = () => {
                     {user ? (
                       <>
                         <div className='  p-[6px] transition font-semibold cursor-pointer flex justify-center items-center gap-1 border-b-2 border-black'>
-                          <img className='rounded-full p-[2px] bg-slate-400' referrerPolicy='no-referrer' src={user && user.photoURL ? user.photoURL : avatarImg} alt='profile'  height='25' width='25' />
+                          <img className='rounded-full p-[2px] bg-slate-400' referrerPolicy='no-referrer' src={user && user.photoURL ? user.photoURL : avatarImg} alt='profile'  height='20' width='20' />
                           <h3>{user?.displayName}</h3>
                         </div>
                         
-                        <div className=' hover:bg-gray-200 p-[6px] transition font-semibold cursor-pointer flex items-center gap-1'>
+                        <Link to={'/dashboard'} className=' hover:bg-gray-200 p-[6px] transition font-semibold cursor-pointer flex items-center gap-1'>
                           <p className='p-[5px] rounded-full
                           bg-gray-300'><MdDashboardCustomize  /></p>
                           DashBoard
-                        </div>
+                        </Link>
                         
                         <div className=' hover:bg-gray-200 p-[6px] transition font-semibold cursor-pointer flex items-center gap-1'>
                           <p className='p-[5px] rounded-full
